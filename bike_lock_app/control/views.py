@@ -7,6 +7,7 @@ import serial
 import threading
 import boto3
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+from django.views.decorators.csrf import csrf_exempt 
 
 
 # Create your views here.
@@ -57,13 +58,13 @@ def send_message_to_sqs(message_body):
         return None
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@csrf_exempt
 def lock_bike(request):
     send_message_to_sqs("Lock")
     return JsonResponse({'status': 'locked'})  # Directly respond without checking request.method
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@csrf_exempt
 def unlock_bike(request):
     send_message_to_sqs("Unlock")
     return JsonResponse({'status': 'unlocked'})  # Directly respond without checking request.method
