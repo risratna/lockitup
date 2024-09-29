@@ -17,7 +17,6 @@ from django.contrib.auth.decorators import login_required
 def insert_number_view(request):
     return render(request, 'control/insert_number.html')
 
-@login_required
 def home(request):
     return render(request, 'control/home.html')
 
