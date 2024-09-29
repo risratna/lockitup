@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #A6A6A6;
+}
+
+.textbox {
+    margin-bottom: 15px;
+}
+
+.textbox input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn {
+    width: 100%;
+    background-color: #A62A2A; /* ASU color */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #C64646; /* Slightly lighter ASU color */
+}
+
+.links {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.links a {
+    display: block;
+    color: #A6A6A6;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}

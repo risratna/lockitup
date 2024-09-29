@@ -14,6 +14,12 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'control/home.html')
 
+def loginPage(request):
+    return render(request, 'control/loginPage.html')
+
+def lockPage(request):
+    return render(request, 'control/lockPage.html')
+
 
 # Initialize serial connection (adjust 'COM3' or '/dev/ttyUSB0' and baudrate as needed)
 try:
