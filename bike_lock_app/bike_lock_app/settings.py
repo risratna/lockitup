@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-0j5!)no91=r)@8ax4g!fjltli(6v@hm4+scl@s4*js_5_@c)k(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.91.18.0']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'control'
+    'control',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://52.91.18.0:8080',
+    'http://0.0.0.0:8080',
 ]
 
 ROOT_URLCONF = 'bike_lock_app.urls'
@@ -67,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.csrf',
             ],
         },
     },
@@ -84,6 +96,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 # Password validation
@@ -131,3 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Adjust the path to your static directory
 ]
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY=None
+
+SESSION_COOKIE_SECURE=False

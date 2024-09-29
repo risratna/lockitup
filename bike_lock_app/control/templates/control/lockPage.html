@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ASU Login Clone</title>
     <style>
         body {
@@ -93,57 +94,60 @@
         <div class="button-container">
             <button id="lock-btn" class="btn">Lock</button>
             <button id="unlock-btn" class="btn">Unlock</button>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
         </div>
     </div>
     <script>
         function getCSRFToken() {
-        var cookieValue = null;
-        var name = "csrftoken";
-        if (document.cookie && document.cookie !== "") {
-            var cookies = document.cookie.split(";");
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(
-                    cookie.substring(name.length + 1)
-                );
-                break;
+            var cookieValue = null;
+            var name = "csrftoken";
+            if (document.cookie && document.cookie !== "") {
+                var cookies = document.cookie.split(";");
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
-            }
             }
             return cookieValue;
         }
+
+        let token = getCSRFToken();
+    
         $("#lock-btn").click(function () {
             $.ajax({
-            url: '{% url "lock_bike" %}',
-            method: "POST",
-            headers: {
-                "X-CSRFToken": getCSRFToken(), // Get CSRF token from cookies
-            },
-            success: function (response) {
-                $("#status").text("Status: Locked"); // Update status on success
-            },
-            error: function () {
-                alert("Failed to lock the bike.");
-            },
+                url: '{% url "lock_bike" %}',
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": token, // Get CSRF token from cookies
+                },
+                success: function (response) {
+                    $("#status").text("Status: Locked"); // Update status on success
+                },
+                error: function (xhr, status, error) {
+                    alert("Failed to lock the bike: " + error);
+                },
             });
-      });
-
-      $("#unlock-btn").click(function () {
-        $.ajax({
-          url: '{% url "unlock_bike" %}',
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCSRFToken(), // Get CSRF token from cookies
-          },
-          success: function (response) {
-            $("#status").text("Status: Unlocked"); // Update status on success
-          },
-          error: function () {
-            alert("Failed to unlock the bike.");
-          },
         });
-      });
+    
+        $("#unlock-btn").click(function () {
+            $.ajax({
+                url: '{% url "unlock_bike" %}',
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": token, // Get CSRF token from cookies
+                },
+                success: function (response) {
+                    $("#status").text("Status: Unlocked"); // Update status on success
+                },
+                error: function (xhr, status, error) {
+                    alert("Failed to unlock the bike: " + error);
+                },
+            });
+        });
     </script>
+    
 </body>
 </html>

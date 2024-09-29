@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 import serial
 import threading
+import boto3
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+
 
 # Create your views here.
 # control/views.py
@@ -31,21 +34,38 @@ except serial.SerialException:
 
 lock = threading.Lock()
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def lock_bike(request):
-    print("Trying to lock")
-    if request.method == 'POST':
-        return JsonResponse({'status': 'locked'})  # Send a JSON response
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+sqs = boto3.client('sqs', region_name='us-east-1')  # Set the appropriate AWS region
+
+# Replace with your SQS queue URL
+queue_url = 'https://sqs.us-east-1.amazonaws.com/342974434512/lockitup-queue'
+
+def send_message_to_sqs(message_body):
+    try:
+        # Send a message to the specified SQS queue
+        response = sqs.send_message(
+            QueueUrl=queue_url,
+            MessageBody=message_body
+        )
+
+        # Print the response details
+        print(f"Message ID: {response['MessageId']}")
+        print(f"MD5 of Body: {response['MD5OfMessageBody']}")
+        return response
+
+    except (NoCredentialsError, PartialCredentialsError) as e:
+        print(f"Credentials error: {e}")
+        return None
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def unlock_bike(request):    
-    print("Trying to unlock")
-    if request.method == 'POST':
-        # Code to send signal to Arduino for unlocking (replace with your actual logic)
-        # send_signal_to_arduino('unlock')
-        return JsonResponse({'status': 'unlocked'})  # Send a JSON response
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+def lock_bike(request):
+    send_message_to_sqs("Lock")
+    return JsonResponse({'status': 'locked'})  # Directly respond without checking request.method
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def unlock_bike(request):
+    send_message_to_sqs("Unlock")
+    return JsonResponse({'status': 'unlocked'})  # Directly respond without checking request.method
+
 
