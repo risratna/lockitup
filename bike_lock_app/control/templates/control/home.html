@@ -1,0 +1,74 @@
+<!-- control/templates/control/home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bike Lock Control</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}</h1>
+    <button id="lock-btn">Lock</button>
+    <button id="unlock-btn">Unlock</button>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div id="map" style="height: 500px;"></div>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        function getCSRFToken() {
+            var cookieValue = null;
+            var name = 'csrftoken';
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        $('#lock-btn').click(function(){
+            $.ajax({
+                url: '{% url "lock_bike" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCSRFToken()  // Get CSRF token from cookies
+                },
+                success: function(response) {
+                    $('#status').text('Status: Locked');  // Update status on success
+                },
+                error: function() {
+                    alert('Failed to lock the bike.');
+                }
+            });
+        });
+
+        $('#unlock-btn').click(function(){
+            $.ajax({
+                url: '{% url "unlock_bike" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCSRFToken()  // Get CSRF token from cookies
+                },
+                success: function(response) {
+                    $('#status').text('Status: Unlocked');  // Update status on success
+                },
+                error: function() {
+                    alert('Failed to unlock the bike.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
