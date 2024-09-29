@@ -1,122 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bike Lock Control</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #ffcc00; /* ASU Gold */
-        color: #5a2d26; /* ASU Maroon */
-      }
-      h1 {
-        color: #5a2d26; /* ASU Maroon */
-        text-align: center;
-      }
-      button {
-        background-color: #5a2d26; /* ASU Maroon */
-        border: none;
-        color: white;
-        padding: 15px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s, transform 0.3s;
-      }
-      button:hover {
-        background-color: #7a4b3a; /* Slightly lighter maroon */
-        transform: scale(1.05); /* Slightly enlarge on hover */
-      }
-      button:active {
-        transform: scale(0.95); /* Shrink on click */
-      }
-      #map {
-        height: 500px;
+      .button-container {
         margin-top: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      #status {
-        margin-top: 10px;
         text-align: center;
-        font-weight: bold;
       }
+      .button {
+        background-color: #8a1b2b; /* ASU Maroon */
+        color: #fcd23e; /* ASU Gold */
+        padding: 10px 20px;
+        margin: 10px;
+      }
+      /* Add any additional styles here */
     </style>
   </head>
   <body>
     <h1>Welcome, {{ user.username }}</h1>
-    <div style="text-align: center">
-      <button id="lock-btn">Lock</button>
-      <button id="unlock-btn">Unlock</button>
+    <div class="message">Have you ever seen something like this on campus?</div>
+    <img src="{% static 'images/bike.jpg' %}" alt="Bike Image" />
+    <div class="message">If yes, we are here to help you</div>
+
+    <div class="button-container">
+      <button class="button" onclick="window.location.href='/map/'">Map</button>
+      <button
+        class="button"
+        onclick="window.location.href='/find-lock-number/'"
+      >
+        Find Lock Number
+      </button>
+      <button class="button" onclick="window.location.href='/insert-number/'">
+        Insert a Number
+      </button>
+      <button class="button" onclick="window.location.href='/insure-bike/'">
+        Insure Your Bike
+      </button>
     </div>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    <div id="map"></div>
-    <div id="status"></div>
-
-    <script>
-      var map = L.map("map").setView([51.505, -0.09], 13);
-
-      function getCSRFToken() {
-        var cookieValue = null;
-        var name = "csrftoken";
-        if (document.cookie && document.cookie !== "") {
-          var cookies = document.cookie.split(";");
-          for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors",
-      }).addTo(map);
-
-      $("#lock-btn").click(function () {
-        $.ajax({
-          url: '{% url "lock_bike" %}',
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCSRFToken(), // Get CSRF token from cookies
-          },
-          success: function (response) {
-            $("#status").text("Status: Locked"); // Update status on success
-          },
-          error: function () {
-            alert("Failed to lock the bike.");
-          },
-        });
-      });
-
-      $("#unlock-btn").click(function () {
-        $.ajax({
-          url: '{% url "unlock_bike" %}',
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCSRFToken(), // Get CSRF token from cookies
-          },
-          success: function (response) {
-            $("#status").text("Status: Unlocked"); // Update status on success
-          },
-          error: function () {
-            alert("Failed to unlock the bike.");
-          },
-        });
-      });
-    </script>
   </body>
 </html>

@@ -17,10 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from control.views import insert_number_view  # Import the new view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('control.urls')),  # API endpoints
     path('accounts/', include('django.contrib.auth.urls')),  # Login/Logout
+
+    # path('map/', views.map_view, name='map'),  # map/ URL
+    path('find-lock-number/', insert_number_view, name='find_lock_number'),
+    path('insert-number/', insert_number_view, name='insert_number'),
+    path('insure-bike/', insert_number_view, name='insure_bike'),
 ]
