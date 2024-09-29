@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -104,4 +104,143 @@
         </div>
     </div>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASU Login Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:  #2e0808; /* ASU Gold */
+            display: flex;
+            flex-direction: column; /* Allow for vertical stacking */
+            align-items: center; /* Center the content horizontally */
+            height: 100vh;
+            margin: 0;
+            justify-content: flex-start; /* Align items to the top */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color:  #ffcc00; /* ASU Gold */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Space between the title and the container */
+        }
+
+        .login-box {
+            padding: 20px;
+        }
+
+        h1.lock-title {
+            text-align: center;
+            color: #e1dbda; /* ASU Maroon */
+            font-size: 75px;
+            margin: 100px 0; /* Add some spacing around the title */
+        }
+
+        h1 {
+            text-align: center;
+            color:  #5a2d26; /* ASU Maroon */
+        }
+
+        .textbox {
+            margin-bottom: 15px;
+        }
+
+        .textbox input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #5a2d26; /* ASU Maroon */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: rgb(158, 52, 52); /* ASU Maroon */
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .links a {
+            display: block;
+            color: #082cdd;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="lock-title">Lock #A1</h1>
+    <div class="container">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="textbox">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="textbox">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <div id="error-message" class="error"></div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a href="#">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to validate password
+        function validatePassword(password) {
+            // Example: Password should be at least 8 characters long
+            return password.length >= 8;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            var password = document.getElementById('password').value;
+            var username = document.getElementById('username').value;
+            var errorMessage = document.getElementById('error-message');
+
+            if (validatePassword(password)) {
+                // If password is valid, redirect to /locka1
+                window.location.href = 'locka1';
+            } else {
+                // Show error message if password is not valid
+                errorMessage.textContent = "Password must be at least 8 characters long.";
+            }
+        });
+    </script>
+</body>
 </html>
+

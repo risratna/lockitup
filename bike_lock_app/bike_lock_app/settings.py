@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-0j5!)no91=r)@8ax4g!fjltli(6v@hm4+scl@s4*js_5_@c)k(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['52.91.18.0']
+ALLOWED_HOSTS = ['52.91.18.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -63,6 +63,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     'http://52.91.18.0:8080',
     'http://0.0.0.0:8080',
+    'http://127.0.0.1:8080',
 ]
 
 ROOT_URLCONF = 'bike_lock_app.urls'

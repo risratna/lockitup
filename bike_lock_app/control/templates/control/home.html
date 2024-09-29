@@ -5,41 +5,118 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bike Lock Control</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #2e0808;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        text-align: center;
+        color: #2e0808;
+      }
+
+      .message {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ffcc00;
+        font-weight: bold;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
       .button-container {
-        margin-top: 20px;
         text-align: center;
       }
+
       .button {
-        background-color: #8a1b2b; /* ASU Maroon */
-        color: #fcd23e; /* ASU Gold */
-        padding: 10px 20px;
+        background-color: #ffcc00;
+        color: #2e0808;
+        padding: 12px 25px;
         margin: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
       }
-      /* Add any additional styles here */
+
+      .button:hover {
+        background-color: #ffe066;
+      }
+
+      .btn {
+        width: 100%;
+        background-color: #ffcc00;
+        color: #2e0808;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .btn:hover {
+        background-color: #ffe066;
+      }
+
+      .links {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .links a {
+        color: #ffcc00;
+        text-decoration: none;
+        margin: 5px 0;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
     </style>
   </head>
   <body>
-    <h1>Welcome, {{ user.username }}</h1>
-    <div class="message">Have you ever seen something like this on campus?</div>
-    <img src="{% static 'images/bike.jpg' %}" alt="Bike Image" />
-    <div class="message">If yes, we are here to help you</div>
+    <div class="container">
+      <h1>Welcome to LockItUp!</h1>
+      <div class="message">Have you ever seen something like this on campus?</div>
+      <img src="{% static 'images/bike.jpg' %}" alt="Bike Image" />
+      <div class="message">If yes, we are here to help you</div>
 
-    <div class="button-container">
-      <button class="button" onclick="window.location.href='/map/'">Map</button>
-      <button
-        class="button"
-        onclick="window.location.href='/find-lock-number/'"
-      >
-        Find Lock Number
-      </button>
-      <button class="button" onclick="window.location.href='/insert-number/'">
-        Insert a Number
-      </button>
-      <button class="button" onclick="window.location.href='/insure-bike/'">
-        Insure Your Bike
-      </button>
+      <div class="button-container">
+        <button class="button" onclick="window.location.href='./map'">Map</button>
+        <!-- <button class="button" onclick="window.location.href='/find-lock-number'"> -->
+          <!-- Find Lock Number -->
+        <!-- </button> -->
+        <!-- <button class="button" onclick="window.location.href='/insert-number/'"> -->
+          <!-- Insert a Number -->
+        <!-- </button> -->
+        <button class="button" onclick="window.location.href='/insure-bike/'">
+          Insure Your Bike
+        </button>
+      </div>
     </div>
   </body>
 </html>

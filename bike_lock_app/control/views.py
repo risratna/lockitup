@@ -69,4 +69,5 @@ def unlock_bike(request):
     send_message_to_sqs("Unlock")
     return JsonResponse({'status': 'unlocked'})  # Directly respond without checking request.method
 
-
+def map(request):
+    return render(request, 'control/map.html')
